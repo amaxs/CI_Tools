@@ -290,7 +290,7 @@ def main():
 
     allowed_sections = ['Added', 'Changed', 'Fixed', 'Deprecated', 'Removed']
 
-    with open(changelog_file, 'r') as file:
+    with open(changelog_file, 'r', encoding='utf-8') as file:
         changelog_content = file.read()
 
     if not verify_changelog_format(changelog_content):
