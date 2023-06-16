@@ -182,6 +182,25 @@ def parse_changelog(changelog_content: str, allowed_sections: List[str]) -> List
         changelog.append({'version': version, 'date': date, 'sections': parsed_sections})
     return changelog
 
+def compare_versions_order(version1:str, version2:str)-> bool:
+    """
+    Check if the version v1 > v2.
+
+    Args:
+        version1: version1 to compare with the format M.m.p
+        version2: version2 to compare with the format M.m.p
+
+    Returns:
+        True if the version 1 is higher than version 2.
+    """
+    v1 = list(map(int, version1.split(".")))
+    v2 = list(map(int, version2.split(".")))
+    # Compare each version element
+    v1_higher_v2 =True
+    for i in range(len(v1)):
+        if v1[i] < v2[i]:
+            v1_higher_v2 = False
+    return v1_higher_v2
 
 def verify_changelog_format(changelog_content: str) -> bool:
     """
@@ -228,7 +247,7 @@ def verify_changelog_format(changelog_content: str) -> bool:
         date_current = datetime.datetime.strptime(matches[i][1], "%Y-%m-%d")
         date_previous = datetime.datetime.strptime(matches[i - 1][1], "%Y-%m-%d")
 
-        if version_current >= version_previous:
+        if compare_versions_order(version_current, version_previous):
             print("Versions are not in descending order. v1:", version_current, "v2:", version_previous)
             return False
 
