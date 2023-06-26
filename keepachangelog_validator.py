@@ -196,11 +196,13 @@ def compare_versions_order(version1:str, version2:str)-> bool:
     v1 = list(map(int, version1.split(".")))
     v2 = list(map(int, version2.split(".")))
     # Compare each version element
-    v1_higher_v2 =True
     for i in range(len(v1)):
-        if v1[i] < v2[i]:
-            v1_higher_v2 = False
-    return v1_higher_v2
+        if v1[i] > v2[i]:
+            return True
+        elif v1[i] < v2[i]:
+            return False
+    # All elements are equal
+    return False
 
 def verify_changelog_format(changelog_content: str) -> bool:
     """
