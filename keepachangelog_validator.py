@@ -238,6 +238,10 @@ def verify_changelog_format(changelog_content: str) -> bool:
     pattern = r"## \[(\d+\.\d+\.\d+)\] - (\d{4}-\d{2}-\d{2})"
     matches = re.findall(pattern, changelog_content)
 
+    if len(matches) == 1:
+        print("Bypass the chronological order check since we seem to have only one version.")
+        return True
+
     if len(matches) < 2:
         print("Versions need to be defined with a release date in the following format 'YYYY-MM-DD'")
         return False
